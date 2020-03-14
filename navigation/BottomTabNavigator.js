@@ -12,6 +12,7 @@ export default function BottomTabNavigator({ navigation, route }) {
   // currently active tab. Learn more in the documentation:
   // https://reactnavigation.org/docs/en/screen-options-resolution.html
   navigation.setOptions({ headerTitle: getHeaderTitle(route) });
+  
 
   return (
     <BottomTab.Navigator initialRouteName={INITIAL_ROUTE_NAME}>
@@ -20,7 +21,7 @@ export default function BottomTabNavigator({ navigation, route }) {
         component={GyroScreen}
         options={{
           title: 'Gyroscope',
-          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-code-working" />,
+          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="ios-compass" />,
         }}
       />
       <BottomTab.Screen
@@ -28,7 +29,7 @@ export default function BottomTabNavigator({ navigation, route }) {
         component={AccScreen}
         options={{
           title: 'Accelerometer',
-          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-code-working" />,
+          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="ios-speedometer" />,
         }}
       />
     </BottomTab.Navigator>
