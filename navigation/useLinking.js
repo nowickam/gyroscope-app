@@ -8,7 +8,8 @@ export default function(containerRef) {
       Root: {
         path: 'root',
         screens: {
-          Home: 'home',
+          Gyro: 'Gyro',
+          Acc: 'Acc'
         },
       },
     },
