@@ -6,6 +6,8 @@ import * as firebase from 'firebase';
 
 export default function HomeScreen() {
   const [data, setData] = useState({});
+  const date=new Date();
+  const dateString=date.getFullYear().toString()+"-"+date.getMonth().toString()+"-"+date.getDate().toString();
 
   useEffect(() => {
     _toggle();
@@ -36,8 +38,10 @@ export default function HomeScreen() {
   const _subscribe = () => {
     this._subscription = Gyroscope.addListener(gyroscopeData => {
       setData(gyroscopeData);
-      firebase.database().ref('gyro-test-ios/'+Date.now()).set({
-        gyroscopeData
+      firebase.database().ref(dateString+"/"+Date.now()).set({
+        x: gyroscopeData.x,
+        y: gyroscopeData.y,
+        z: gyroscopeData.z
       })
     });
   };
@@ -48,7 +52,6 @@ export default function HomeScreen() {
   };
 
   let { x, y, z } = data;
-
   return (
     <View style={styles.sensor}>
       <Text style={styles.text}>Gyroscope:</Text>
@@ -75,7 +78,7 @@ function round(n) {
     return 0;
   }
 
-  return Math.floor(n * 100) / 100;
+  return Math.floor(n * 1000) / 1000;
 }
 
 const styles = StyleSheet.create({
