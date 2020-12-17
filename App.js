@@ -12,6 +12,8 @@ import useLinking from './navigation/useLinking';
 import apiKeys from './constants/ApiKeys';
 import * as firebase from 'firebase';
 
+import {cleanup} from './db_read/db_cleanup'
+
 const Stack = createStackNavigator();
 
 export default function App(props) {
@@ -42,12 +44,14 @@ export default function App(props) {
         // We might want to provide this error information to an error reporting service
         console.warn(e);
       } finally {
+        //cleanup();
         setLoadingComplete(true);
         SplashScreen.hide();
       }
     }
 
     loadResourcesAndDataAsync();
+    //cleanup();
   }, []);
 
   if (!isLoadingComplete && !props.skipLoadingScreen) {

@@ -12,10 +12,11 @@ export default class AccScreen extends Component {
       data: null,
       toggleString: "OFF"
     }
-    this.start=Date.now();
+    this.start=null;
     this.date = new Date();
-    this.dateString = this.date.getFullYear().toString() + "-" + this.date.getMonth().toString() + "-" + this.date.getDate().toString()
-
+    this.dateString = this.date.getFullYear().toString() + "-" + this.date.getMonth().toString() + "-" + this.date.getDate().toString();
+    this.isFirst=true;
+    
   }
   static navigationOptions = {
     header: null,
@@ -23,6 +24,7 @@ export default class AccScreen extends Component {
 
   componentDidMount() {
     this._subscribe();
+    Accelerometer.setUpdateInterval(5000);
   }
 
   componentWillUnmoundatet() {
@@ -52,6 +54,10 @@ export default class AccScreen extends Component {
       this.setState({
         data: accelerometerData
       });
+      if(this.isFirst){
+        this.start=Date.now()
+        this.isFirst=false
+      }
       firebase.database().ref("accelerometer/"+this.dateString + "/" + (Date.now()-this.start).toString()).set({
         x: accelerometerData.x,
         y: accelerometerData.y,

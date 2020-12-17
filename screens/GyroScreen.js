@@ -12,10 +12,10 @@ export default class GyroScreen extends Component {
       data: null,
       toggleString: "OFF"
     }
-    this.start = Date.now();
+    this.start = null;
     this.date = new Date();
     this.dateString = this.date.getFullYear().toString() + "-" + this.date.getMonth().toString() + "-" + this.date.getDate().toString()
-
+    this.isFirst=true;
   }
   static navigationOptions = {
     header: null,
@@ -23,6 +23,7 @@ export default class GyroScreen extends Component {
 
   componentDidMount() {
     this._subscribe();
+    Gyroscope.setUpdateInterval(5000);
   }
 
   componentWillUnmoundatet() {
@@ -52,6 +53,10 @@ export default class GyroScreen extends Component {
       this.setState({
         data: gyroscopeData
       });
+      if(this.isFirst){
+        this.start=Date.now()
+        this.isFirst=false
+      }
       firebase.database().ref("gyroscope/" + this.dateString + "/" + (Date.now() - this.start).toString()).set({
         x: gyroscopeData.x,
         y: gyroscopeData.y,
